@@ -1,5 +1,15 @@
 version: '3'
 services:
+  nodejs-server:
+    build:
+      context: ./backend
+    ports:
+      - "3080:3080"
+    volumes:
+      - ./backend:/usr/src/app/backend
+      - /usr/src/app/backend/node_modules
+    depends_on:
+      - postgres
   react:
     build: ./frontend
     ports:
@@ -7,5 +17,22 @@ services:
     volumes:
       - ./frontend:/usr/src/app/frontend
       - /usr/src/app/frontend/node_modules
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./dump:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "joao@email.com.br"
+      PGADMIN_DEFAULT_PASSWORD: "pgadmin"
+    ports:
+      - "16543:80"
+    depends_on:
+      - postgres
 volumes:
     persistent:
