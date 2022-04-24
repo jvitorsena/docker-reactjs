@@ -23,6 +23,6 @@ consign()
     .then('./config/routes.js')
     .into(app)
 
-app.listen(3080, () => {
+app.listen(8000, () => {
     console.log('Backend executando na porta 8000')
 })

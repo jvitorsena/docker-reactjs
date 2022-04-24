@@ -10,6 +10,6 @@ RUN npm -g install nodemon
 
 RUN mkdir -p node_modules/.cache && chmod -R 777 node_modules/.cache
 
-EXPOSE 3080
+EXPOSE 8000
 
 CMD ["npm", "run", "dev"]
