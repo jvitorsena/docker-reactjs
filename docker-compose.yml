@@ -1,0 +1,11 @@
+version: '3'
+services:
+  react:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/usr/src/app/frontend
+      - /usr/src/app/frontend/node_modules
+volumes:
+    persistent:
