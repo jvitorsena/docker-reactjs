@@ -10,6 +10,8 @@ services:
       - /usr/src/app/backend/node_modules
     depends_on:
       - postgres
+    networks:
+      - reactjs-network
   react:
     build: ./frontend
     ports:
@@ -17,6 +19,8 @@ services:
     volumes:
       - ./frontend:/usr/src/app/frontend
       - /usr/src/app/frontend/node_modules
+    networks:
+      - reactjs-network
   postgres:
     image: postgres
     environment:
@@ -25,6 +29,8 @@ services:
       - "5432:5432"
     volumes:
       - ./dump:/var/lib/postgresql/data
+    networks:
+      - reactjs-network
   pgadmin:
     image: dpage/pgadmin4
     environment:
@@ -34,5 +40,10 @@ services:
       - "16543:80"
     depends_on:
       - postgres
+    networks:
+      - reactjs-network
 volumes:
     persistent:
+networks: 
+  reactjs-network:
+    driver: bridge
