@@ -5,6 +5,9 @@ import Nav from "react-bootstrap/Nav"
 import { useState } from "react"
 import { useForm } from 'react-hook-form'
 import axios from "axios"
+// import  host  from "./host"
+import { host } from "../next.config"
+// import host2 from "./host2"
 
 export default function Home(props) {
 
@@ -23,13 +26,15 @@ export default function Home(props) {
     console.log(atr)
   }
 
+  // console.log(host2)
+
   const handleSignIn = async (data) => {
 
     const data1 = {...data}
 
 
     const headers = {'headers': {'Content-Type': 'application/json'}}
-    const tarefas = await axios.create({baseURL: "http://nodejs-server:8000"}) 
+    const tarefas = await axios.create({baseURL: host }) 
     const res = await tarefas.post("/tarefas", data1 , headers)
     .then((response) => {
       setStatus({
@@ -87,9 +92,9 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps() {
-  const dataConcluidos = await (await axios.get('http://nodejs-server:8000/tarefas/concluidos')).data
-  const dataPendentes = await (await axios.get('http://nodejs-server:8000/tarefas/pendentes')).data
-  const dataTodasTarefas = await (await axios.get('http://nodejs-server:8000/tarefas')).data
+  const dataConcluidos = await (await axios.get(host + '/tarefas/concluidos')).data
+  const dataPendentes = await (await axios.get(host + '/tarefas/pendentes')).data
+  const dataTodasTarefas = await (await axios.get(host + '/tarefas')).data
   console.log(dataPendentes)
 
   /* Método antigo */
