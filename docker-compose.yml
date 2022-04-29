@@ -1,6 +1,7 @@
 version: '3'
 services:
   nodejs-server:
+    container_name: backend_nodejs
     build:
       context: ./backend
     ports:
@@ -9,10 +10,11 @@ services:
       - ./backend:/usr/src/app/backend
       - /usr/src/app/backend/node_modules
     depends_on:
-      - postgres
+      - "postgres"
     networks:
       - reactjs-network
   react:
+    container_name: frontend_reactjs
     build: ./frontend
     ports:
       - "3000:3000"
@@ -21,17 +23,22 @@ services:
       - /usr/src/app/frontend/node_modules
     networks:
       - reactjs-network
+    depends_on:
+      - "nodejs-server"
   postgres:
-    image: postgres
+    container_name: database_postgres
+    build: ./database
     environment:
       POSTGRES_PASSWORD: "postgres"
     ports:
       - "5432:5432"
     volumes:
-      - ./dump:/var/lib/postgresql/data
+      - ./database/data/:/var/lib/postgresql/data
+      - ./database/backups/:/backups
     networks:
       - reactjs-network
   pgadmin:
+    container_name: SGBD_pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: "joao@email.com.br"
@@ -39,7 +46,7 @@ services:
     ports:
       - "16543:80"
     depends_on:
-      - postgres
+      - "postgres"
     networks:
       - reactjs-network
 volumes:

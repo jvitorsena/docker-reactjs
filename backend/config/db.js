@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-const sequelize = new Sequelize('tarefas','postgres','postgres', {
+const sequelize = new Sequelize('postgres','postgres','postgres', {
     host: 'postgres',
     dialectOptions: {
      useUTC: false     // para considerar a hora da consulta como a hora 

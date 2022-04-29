@@ -11,7 +11,7 @@
 /backend/.pnp.js
 
 
-/dump
+/database/data
 
 # testing
 /frontend/coverage
